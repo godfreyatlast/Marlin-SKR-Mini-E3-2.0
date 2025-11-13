@@ -173,6 +173,11 @@ class Endstops {
     static void init();
 
     /**
+     * Saved settings initialization
+     */
+    static void factory_reset();
+
+    /**
      * Are endstops or the Z min probe or the CALIBRATION probe set to abort the move?
      */
     FORCE_INLINE static bool abort_enabled() {
@@ -241,7 +246,7 @@ class Endstops {
     static void enable(const bool onoff=true);
 
     // Disable / Enable endstops based on ENSTOPS_ONLY_FOR_HOMING and global enable
-    static void not_homing();
+    static void not_homing() { enabled = enabled_globally; }
 
     #if ENABLED(VALIDATE_HOMING_ENDSTOPS)
       // If the last move failed to trigger an endstop, call kill

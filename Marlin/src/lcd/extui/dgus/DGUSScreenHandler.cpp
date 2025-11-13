@@ -326,7 +326,7 @@ void DGUSScreenHandler::sendHeaterStatusToDisplay(DGUS_VP_Variable &var) {
   void DGUSScreenHandler::sdCardError() {
     DGUSScreenHandler::sdCardRemoved();
     #if DGUS_LCD_UI_MKS
-      sendInfoScreenMKS(F("NOTICE"), nullptr, F("SD card error"), nullptr, mks_language_index);
+      screen.sendInfoScreenMKS(F("NOTICE"), nullptr, F("SD card error"), nullptr, mks_language_index);
     #else
       sendInfoScreen(F("NOTICE"), nullptr, F("SD card error"), nullptr);
     #endif
@@ -542,7 +542,7 @@ void DGUSScreenHandler::handleSettings(DGUS_VP_Variable &var, void *val_ptr) {
 
 #if HAS_BED_PROBE
   void DGUSScreenHandler::handleProbeOffsetZChanged(DGUS_VP_Variable &var, void *val_ptr) {
-    const float offset = float(int16_t(BE16_P(val_ptr))) / 100.0f;
+    const float offset = float(int16_t(BE16_P(val_ptr))) * 0.01f;
     ExtUI::setZOffset_mm(offset);
     skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
     return;
